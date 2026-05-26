@@ -2,9 +2,7 @@
 
 import { useQuery } from '@tanstack/react-query';
 import { useParams } from 'next/navigation';
-// Використовуємо чистий абсолютний шлях через аліас @
 import { fetchNoteById } from '@/lib/api';
-// Імпортуємо стилі, які лежать ПОРУЧ із цим компонентом за вимогами ТЗ
 import css from './NoteDetails.client.module.css';
 
 export default function NoteDetailsClient() {
@@ -19,6 +17,8 @@ export default function NoteDetailsClient() {
     queryKey: ['note', id],
     queryFn: () => fetchNoteById(id),
     enabled: !!id,
+    // ДОДАЄМО РЯДОК, ЯКИЙ ВИМАГАЄ МЕНТОР:
+    refetchOnMount: false,
   });
 
   // Опрацювання стану isLoading за технічним завданням
@@ -36,7 +36,6 @@ export default function NoteDetailsClient() {
     <div className={css.container}>
       <div className={css.item}>
         <div className={css.header}>
-          {/* Використовуємо реальний заголовок нотатки */}
           <h2>{note.title}</h2>
         </div>
         <p className={css.tag}>{note.tag}</p>
